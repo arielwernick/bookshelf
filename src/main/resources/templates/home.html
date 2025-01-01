@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Bookshelf</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: #f5e6d3;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #2c1810;
+            text-align: center;
+            font-family: 'Georgia', serif;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+        }
+
+        .bookshelf {
+            background: linear-gradient(to bottom, #8b4513, #654321);
+            border-radius: 4px;
+            padding: 30px;
+            margin-bottom: 50px;
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.4),
+                inset 0 -10px 20px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .bookshelf::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: #654321;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 10px;
+        }
+
+        .book {
+            perspective: 1500px;
+            height: 220px;
+        }
+
+        .book-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .book.active .book-inner {
+            transform: rotateY(180deg);
+        }
+
+        .book-cover, .book-details {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 3px;
+        }
+
+        .book-cover {
+            background: linear-gradient(to right,
+                rgba(0,0,0,0.2) 0%,
+                rgba(0,0,0,0.1) 5%,
+                rgba(0,0,0,0) 10%,
+                rgba(0,0,0,0) 90%,
+                rgba(0,0,0,0.1) 95%,
+                rgba(0,0,0,0.2) 100%
+            );
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 
+                -2px 0 5px rgba(0,0,0,0.2),
+                2px 0 5px rgba(0,0,0,0.2),
+                0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .book-details {
+            background: white;
+            transform: rotateY(180deg);
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .book-title {
+            font-family: 'Georgia', serif;
+            font-size: 1.2em;
+            margin: 0 0 10px 0;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .book-author {
+            font-style: italic;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9em;
+            margin: 0;
+            position: relative;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #1a73e8;
+            cursor: pointer;
+            font-size: 1.2em;
+            z-index: 2;
+        }
+
+        .book-spine {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            background: rgba(0,0,0,0.1);
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Bookshelf</h1>
+        
+        <!-- First Shelf -->
+        <div class="bookshelf">
+            <div class="books-grid">
+                <div th:each="book, iterStat : ${books}" class="book" th:if="${iterStat.index < 3}">
+                    <div class="book-inner">
+                        <div class="book-cover" th:style="'background-color: hsl(' + ${book.id * 40} + ', 70%, 35%);'">
+                            <div class="book-spine"></div>
+                            <h2 class="book-title" th:text="${book.title}">Book Title</h2>
+                            <p class="book-author" th:text="${book.author}">Author Name</p>
+                        </div>
+                        <div class="book-details">
+                            <button class="close-button">&times;</button>
+                            <h2 class="book-title" th:text="${book.title}">Book Title</h2>
+                            <p class="book-author" th:text="${book.author}">Author Name</p>
+                            <p class="book-pages" th:text="${book.pages + ' pages'}">Pages</p>
+                            <div class="book-summary">
+                                <h3>Summary</h3>
+                                <p th:text="${book.summary}">Summary text</p>
+                            </div>
+                            <div class="book-review">
+                                <h3>Review</h3>
+                                <p th:text="${book.review}">Review text</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Shelf -->
+        <div class="bookshelf">
+            <div class="books-grid">
+                <div th:each="book, iterStat : ${books}" class="book" th:if="${iterStat.index >= 3 && iterStat.index < 6}">
+                    <div class="book-inner">
+                        <div class="book-cover" th:style="'background-color: hsl(' + ${book.id * 40} + ', 70%, 35%);'">
+                            <div class="book-spine"></div>
+                            <h2 class="book-title" th:text="${book.title}">Book Title</h2>
+                            <p class="book-author" th:text="${book.author}">Author Name</p>
+                        </div>
+                        <div class="book-details">
+                            <button class="close-button">&times;</button>
+                            <h2 class="book-title" th:text="${book.title}">Book Title</h2>
+                            <p class="book-author" th:text="${book.author}">Author Name</p>
+                            <p class="book-pages" th:text="${book.pages + ' pages'}">Pages</p>
+                            <div class="book-summary">
+                                <h3>Summary</h3>
+                                <p th:text="${book.summary}">Summary text</p>
+                            </div>
+                            <div class="book-review">
+                                <h3>Review</h3>
+                                <p th:text="${book.review}">Review text</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Third Shelf -->
+        <div class="bookshelf">
+            <div class="books-grid">
+                <div th:each="book, iterStat : ${books}" class="book" th:if="${iterStat.index >= 6 && iterStat.index < 9}">
+                    <div class="book-inner">
+                        <div class="book-cover" th:style="'background-color: hsl(' + ${book.id * 40} + ', 70%, 35%);'">
+                            <div class="book-spine"></div>
+                            <h2 class="book-title" th:text="${book.title}">Book Title</h2>
+                            <p class="book-author" th:text="${book.author}">Author Name</p>
+                        </div>
+                        <div class="book-details">
+                            <button class="close-button">&times;</button>
+                            <h2 class="book-title" th:text="${book.title}">Book Title</h2>
+                            <p class="book-author" th:text="${book.author}">Author Name</p>
+                            <p class="book-pages" th:text="${book.pages + ' pages'}">Pages</p>
+                            <div class="book-summary">
+                                <h3>Summary</h3>
+                                <p th:text="${book.summary}">Summary text</p>
+                            </div>
+                            <div class="book-review">
+                                <h3>Review</h3>
+                                <p th:text="${book.review}">Review text</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fourth Shelf -->
+        <div class="bookshelf">
+            <div class="books-grid">
+                <div th:each="book, iterStat : ${books}" class="book" th:if="${iterStat.index >= 9}">
+                    <div class="book-inner">
+                        <div class="book-cover" th:style="'background-color: hsl(' + ${book.id * 40} + ', 70%, 35%);'">
+                            <div class="book-spine"></div>
+                            <h2 class="book-title" th:text="${book.title}">Book Title</h2>
+                            <p class="book-author" th:text="${book.author}">Author Name</p>
+                        </div>
+                        <div class="book-details">
+                            <button class="close-button">&times;</button>
+                            <h2 class="book-title" th:text="${book.title}">Book Title</h2>
+                            <p class="book-author" th:text="${book.author}">Author Name</p>
+                            <p class="book-pages" th:text="${book.pages + ' pages'}">Pages</p>
+                            <div class="book-summary">
+                                <h3>Summary</h3>
+                                <p th:text="${book.summary}">Summary text</p>
+                            </div>
+                            <div class="book-review">
+                                <h3>Review</h3>
+                                <p th:text="${book.review}">Review text</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const books = document.querySelectorAll('.book');
+            
+            books.forEach(book => {
+                const bookInner = book.querySelector('.book-inner');
+                const closeButton = book.querySelector('.close-button');
+
+                bookInner.addEventListener('click', function(e) {
+                    if (!book.classList.contains('active')) {
+                        // Close any other open books
+                        books.forEach(b => b.classList.remove('active'));
+                        // Open this book
+                        book.classList.add('active');
+                    }
+                });
+
+                closeButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    book.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
