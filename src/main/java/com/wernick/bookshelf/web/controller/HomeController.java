@@ -1,6 +1,6 @@
-package com.wernick.bookshelf.controller;
+package com.wernick.bookshelf.web.controller;
 
-import com.wernick.bookshelf.service.BookService;
+import com.wernick.bookshelf.core.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-
     private final BookService bookService;
 
     @Autowired
