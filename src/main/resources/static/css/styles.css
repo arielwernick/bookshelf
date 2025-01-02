@@ -68,7 +68,7 @@ body {
 
 .book.dragging {
   opacity: 0.7;
-  transform: scale(1.05) rotate(1deg);
+  transform: scale(1.05) translateY(-10px);
   z-index: 1000;
 }
 
