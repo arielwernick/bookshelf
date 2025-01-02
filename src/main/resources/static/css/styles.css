@@ -1,0 +1,224 @@
+:root {
+  --bookshelf-wood: #8b4513;
+  --bookshelf-shadow: #654321;
+}
+
+body {
+  background-color: #f8f9fa;
+  font-family: 'Inter', sans-serif;
+}
+
+.bookshelf-container {
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.page-title {
+  color: var(--bookshelf-wood);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.bookshelf {
+  background: 
+    linear-gradient(to right,
+      rgba(0,0,0,0.1) 0px,
+      transparent 1px
+    ) 0 0 / 30px 30px repeat,
+    linear-gradient(to bottom, var(--bookshelf-wood), var(--bookshelf-shadow));
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  box-shadow: 
+    0 4px 6px rgba(0,0,0,0.2),
+    inset 0 -10px 20px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.bookshelf.drag-over {
+  background: linear-gradient(to bottom, 
+    var(--bookshelf-wood), 
+    var(--bookshelf-shadow)
+  );
+  box-shadow: 
+    0 0 0 3px rgba(255,255,255,0.4),
+    0 4px 6px rgba(0,0,0,0.2),
+    inset 0 -10px 20px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+  padding: 0.5rem;
+}
+
+.book {
+  perspective: 1500px;
+  height: 260px;
+  position: relative;
+  user-select: none;
+  z-index: 1;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.book.dragging {
+  opacity: 0.7;
+  transform: scale(1.05) rotate(1deg);
+  z-index: 1000;
+}
+
+.dragging-active .book:not(.dragging) {
+  opacity: 0.5;
+  transform: scale(0.98);
+}
+
+.book:hover {
+  cursor: grab;
+}
+
+.book:active {
+  cursor: grabbing;
+}
+
+.book-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.book.active .book-inner {
+  transform: rotateY(180deg);
+}
+
+.book-cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 4px;
+  background: linear-gradient(to right,
+    rgba(0,0,0,0.4) 0%,
+    rgba(0,0,0,0.2) 5%,
+    rgba(0,0,0,0.1) 10%,
+    rgba(0,0,0,0.1) 90%,
+    rgba(0,0,0,0.2) 95%,
+    rgba(0,0,0,0.4) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.5rem;
+  box-shadow: 
+    -4px 4px 8px rgba(0,0,0,0.3),
+    1px 1px 2px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+.book-spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 30px;
+  background: linear-gradient(to right,
+    rgba(0,0,0,0.4) 0%,
+    rgba(0,0,0,0.2) 35%,
+    rgba(0,0,0,0.1) 100%
+  );
+  border-right: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px 0 0 4px;
+}
+
+.book-title {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem 25px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  font-family: 'Georgia', serif;
+  position: relative;
+  z-index: 1;
+}
+
+.book-author {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.9rem;
+  margin: 0 0 0 25px;
+  font-style: italic;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 1;
+}
+
+.book-cover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to right,
+    rgba(255,255,255,0.1),
+    rgba(255,255,255,0.05)
+  );
+}
+
+.book-cover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,0.1),
+    rgba(255,255,255,0.05)
+  );
+  border-radius: 4px 4px 0 0;
+}
+
+.book:hover .book-cover {
+  transform: translateY(-8px) rotateX(10deg);
+  box-shadow: 
+    -4px 8px 12px rgba(0,0,0,0.4),
+    1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.book-details {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: white;
+  transform: rotateY(180deg);
+  padding: 1.5rem;
+  overflow-y: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.modal-content {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.char-counter {
+  font-size: 0.8rem;
+  color: #6c757d;
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+.dragging-active .book:not(.dragging) .book-inner {
+  opacity: 1;
+} 
