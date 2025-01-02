@@ -21,6 +21,8 @@ public class Book {
     
     @Column(length = 1000)
     private String review;
+    
+    private Integer position;
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -40,4 +42,7 @@ public class Book {
     
     public String getReview() { return review; }
     public void setReview(String review) { this.review = review; }
+    
+    public Integer getPosition() { return position; }
+    public void setPosition(Integer position) { this.position = position; }
 } 

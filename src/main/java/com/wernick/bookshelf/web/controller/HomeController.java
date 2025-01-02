@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class HomeController {
 
@@ -22,7 +24,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("books", bookRepository.findAll());
+        model.addAttribute("books", bookRepository.findAllByOrderByPositionAsc());
         return "home";
     }
 
@@ -37,5 +39,22 @@ public class HomeController {
         }
         Book savedBook = bookRepository.save(book);
         return ResponseEntity.ok(savedBook);
+    }
+
+    @PostMapping("/api/books/reorder")
+    @ResponseBody
+    public ResponseEntity<?> reorderBooks(@RequestBody List<Long> bookIds) {
+        try {
+            int position = 0;
+            for (Long id : bookIds) {
+                Book book = bookRepository.findById(id).orElseThrow();
+                book.setPosition(position++);
+                bookRepository.save(book);
+            }
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 } 
