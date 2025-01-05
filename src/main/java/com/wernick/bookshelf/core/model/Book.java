@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class Book {
@@ -23,6 +25,10 @@ public class Book {
     private String review;
     
     private Integer position;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -45,4 +51,8 @@ public class Book {
     
     public Integer getPosition() { return position; }
     public void setPosition(Integer position) { this.position = position; }
+
+    // New user getter and setter
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 } 

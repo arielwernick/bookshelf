@@ -268,4 +268,200 @@ body {
 .bookshelf.drag-over {
   background: var(--canva-gray);
   border: 2px dashed var(--canva-purple);
+}
+
+/* Authentication Pages */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--canva-purple) 0%, var(--canva-purple-light) 100%);
+}
+
+.auth-box {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.auth-title {
+  color: var(--canva-purple);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-title i {
+  font-size: 2.5rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.auth-form .form-label {
+  font-weight: 500;
+  color: var(--canva-text);
+  margin-bottom: 0.5rem;
+}
+
+.auth-form .form-control {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--canva-border);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.auth-form .form-control:focus {
+  border-color: var(--canva-purple);
+  box-shadow: 0 0 0 3px rgba(125, 42, 232, 0.1);
+}
+
+.auth-form .form-text {
+  color: #666;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* Avatar Selection */
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.avatar-option {
+  position: relative;
+}
+
+.avatar-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.avatar-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 2px solid var(--canva-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.avatar-emoji {
+  font-size: 1.5rem;
+}
+
+.avatar-input:checked + .avatar-label {
+  border-color: var(--canva-purple);
+  background: rgba(125, 42, 232, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-label:hover {
+  border-color: var(--canva-purple-light);
+  transform: translateY(-2px);
+}
+
+/* Alert Styles */
+.alert {
+  border: none;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.alert-danger {
+  background: #ffe5e5;
+  color: #d63031;
+}
+
+.alert-success {
+  background: #e5f9e0;
+  color: #27ae60;
+}
+
+/* User Header */
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px var(--canva-shadow);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-avatar {
+  font-size: 2rem;
+  background: var(--canva-gradient);
+  padding: 0.75rem;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px var(--canva-shadow);
+}
+
+.user-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--canva-text);
+  margin: 0;
+}
+
+/* Welcome Message */
+.welcome-message {
+  text-align: center;
+  padding: 3rem;
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 6px var(--canva-shadow);
+}
+
+.welcome-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.welcome-content h2 {
+  color: var(--canva-purple);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.welcome-content p {
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Update bookshelf container padding for the header */
+.bookshelf-container {
+  padding-top: 1.5rem;
 } 
