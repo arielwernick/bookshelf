@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findAllByUserOrderByPositionAsc(User user);
     Optional<Book> findByIdAndUser(Long id, User user);
+    long countByUser(User user);
 } 

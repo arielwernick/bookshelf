@@ -17,4 +17,11 @@ CREATE TABLE IF NOT EXISTS BOOK (
     position INTEGER,
     user_id BIGINT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES USERS(id)
+);
+
+-- Create table seats if it doesn't exist
+CREATE TABLE IF NOT EXISTS TABLE_SEATS (
+    seat_number INTEGER PRIMARY KEY,
+    user_id BIGINT UNIQUE,
+    FOREIGN KEY (user_id) REFERENCES USERS(id)
 ); 
